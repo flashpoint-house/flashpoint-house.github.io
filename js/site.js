@@ -237,6 +237,14 @@
         }
     });
 
+    addCommand({
+        name: "clear",
+        man: "Clears the terminal.",
+        fn: function() {
+            // handled by the terminal
+        }
+    });
+
 })();
 
 

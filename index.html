@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Flashpoint</title>
+        <link href='https://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
+        <style>
+          body {
+            background-color: black;
+            font-family: 'VT323', 'monospace';
+            box-sizing: border-box;
+            color: green;
+            font-size: 18px;
+          }
+
+          .center-wrapper {
+            position: relative;
+          }
+
+          html, body, .center-wrapper {
+            height: 100%;
+          }
+
+          .text {
+            position: absolute;
+            top: 50%;
+            height: 50px;
+            margin-top: -25px;
+            text-align: center;
+            width: 100%;
+          }
+
+          .blinker {
+            display: inline-block;
+            height: 1em;
+            width: 10px;
+            position: relative;
+            top: 2px;
+            background-color: black;
+            animation: blink 1s steps(1) infinite;
+            -webkit-animation: blink 1s steps(1) infinite;
+          }
+
+          @keyframes blink {
+            0% {
+              background-color: black;
+            }
+            50% {
+              background-color: green;
+            }
+            100% {
+              background-color: black;
+            }
+          }
+          @-webkit-keyframes blink {
+            0% {
+              background-color: black;
+            }
+            50% {
+              background-color: green;
+            }
+            100% {
+              background-color: black;
+            }
+          }
+
+        </style>
+    </head>
+    <body class="homepage">
+      <div class="center-wrapper">
+        <div class="text">
+          $ whois flashpoint.house
+          <div class="blinker"></div>
+        </div>
+      </div>
+    </body>
+</html>

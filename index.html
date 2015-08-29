@@ -10,7 +10,7 @@
             font-family: 'VT323', 'monospace';
             box-sizing: border-box;
             color: green;
-            font-size: 1rem;
+            font-size: 18px;
           }
 
           .center-wrapper {
@@ -24,16 +24,35 @@
           .text {
             position: absolute;
             top: 50%;
-            height: 1em;
-            margin-top: -0.5em;
+            height: 20px;
+            margin-top: -10px;
             text-align: center;
             width: 100%;
+
+
+            font-size: calc(7vw);
+            font-size: -webkit-calc(7vw);
+
+            height: calc(7vw);
+            height: -webkit-calc(7vw);
+
+            margin-top: calc(-3.5vw);
+            margin-top: -webkit-calc(-3.5vw);
           }
 
           .blinker {
             display: inline-block;
+
             height: 1em;
             width: 0.5em;
+
+            height: calc(7vw);
+            height: -webkit-calc(7vw);
+
+            width: calc(3.5vw);
+            width: -webkit-calc(3.5vw);
+
+
             position: relative;
             top: 2px;
             background-color: black;

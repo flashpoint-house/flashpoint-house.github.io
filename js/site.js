@@ -245,6 +245,28 @@
         }
     });
 
+    function rot13(s) {
+      return s.replace(/[A-Za-z]/g, function (c) {
+        return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".charAt(
+               "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm".indexOf(c)
+        );
+      });
+    }
+
+    // stupid obfuscation to (maybe?) keep out spambots...
+    // good thing slack tokens are revokable
+    var SLACK_URL = rot13("uggcf://ubbxf.fynpx.pbz/freivprf/G08SQU6GI/O09F099AJ/TC3aj1odE5SnRUrOOVpylXQz");
+
+    addCommand({
+        name: "slack",
+        man: "Usage: slack MESSAGE\n\nSends a message to the Flashpoint Slack",
+        fn: function(args, rawArgs) {
+            $.post(SLACK_URL, {
+                payload: JSON.stringify({text: rawArgs})
+            });
+        }
+    });
+
 })();
 
 

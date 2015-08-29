@@ -110,7 +110,7 @@
         }
     }, {
         greetings: "[[;green;black;ascii-logo]" + ASCII_LOGO + "]",
-        height: window.innerHeight,
+        height: window.innerHeight - 40,
         prompt: "user@flashpoint:~$ "
     });
 

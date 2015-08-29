@@ -11,6 +11,14 @@
 
         <link href="css/site.css" rel="stylesheet"/>
 
+        <script type="application/javascript">
+          function ipcallback(json) {
+            console.log("JSON", json);
+            window.USER_IP = json.ip;
+          }
+        </script>
+        <script type="application/javascript" src="http://api.ipify.org?format=jsonp&callback=ipcallback"></script>
+
     </head>
 
     <body>
@@ -18,5 +26,8 @@
       </div>
 
       <script src="js/site.js"></script>
+
+
+
     </body>
 </html>

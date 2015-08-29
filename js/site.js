@@ -111,7 +111,9 @@
     }, {
         greetings: "[[;green;black;ascii-logo]" + ASCII_LOGO + "]",
         height: window.innerHeight - 40,
-        prompt: "user@flashpoint:~$ "
+        prompt: function(callback) {
+            callback(window.USER_IP + "@flashpoint.house:~$ ");
+        }
     });
 
 
@@ -262,8 +264,19 @@
         man: "Usage: slack MESSAGE\n\nSends a message to the Flashpoint Slack",
         fn: function(args, rawArgs) {
             $.post(SLACK_URL, {
-                payload: JSON.stringify({text: rawArgs})
+                payload: JSON.stringify({
+                    text: rawArgs,
+                    username: window.USER_IP + "@flashpoint.house"
+                })
             });
+        }
+    });
+
+    addCommand({
+        name: "whoami",
+        man: "Print the name of the current user",
+        fn: function() {
+            return window.USER_IP;
         }
     });
 

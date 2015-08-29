@@ -1,0 +1,28 @@
+@import url(https://fonts.googleapis.com/css?family=VT323);
+
+body {
+  background-color: black;
+  font-family: 'VT323', 'monospace';
+  box-sizing: border-box;
+  color: green;
+  font-size: 18px;
+}
+
+.terminal, .cmd {
+  color: green;
+}
+
+.cmd .cursor.blink {
+    background-color: green;.
+    color: #fff;
+}
+
+.ascii-logo {
+  font-size: 6px;
+  line-height: 6px;
+  letter-spacing: 2px;
+}
+
+.terminal .terminal-output div:first-child div {
+  line-height: 6px;
+}

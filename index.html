@@ -3,94 +3,20 @@
     <head>
         <meta charset="utf-8">
         <title>Flashpoint</title>
-        <link href='https://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
-        <style>
-          body {
-            background-color: black;
-            font-family: 'VT323', 'monospace';
-            box-sizing: border-box;
-            color: green;
-            font-size: 18px;
-          }
+        <script src="js/jquery-1.7.1.min.js"></script>
+        <script src="js/jquery.mousewheel-min.js"></script>
+        <script src="js/jquery.terminal-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
+        <link href="css/jquery.terminal.css" rel="stylesheet"/>
 
-          .center-wrapper {
-            position: relative;
-          }
+        <link href="css/site.css" rel="stylesheet"/>
 
-          html, body, .center-wrapper {
-            height: 100%;
-          }
-
-          .text {
-            position: absolute;
-            top: 50%;
-            height: 20px;
-            margin-top: -10px;
-            text-align: center;
-            width: 100%;
-
-
-            font-size: calc(7vw);
-            font-size: -webkit-calc(7vw);
-
-            height: calc(7vw);
-            height: -webkit-calc(7vw);
-
-            margin-top: calc(-3.5vw);
-            margin-top: -webkit-calc(-3.5vw);
-          }
-
-          .blinker {
-            display: inline-block;
-
-            height: 1em;
-            width: 0.5em;
-
-            height: calc(7vw);
-            height: -webkit-calc(7vw);
-
-            width: calc(3.5vw);
-            width: -webkit-calc(3.5vw);
-
-
-            position: relative;
-            top: 2px;
-            background-color: black;
-            animation: blink 1s steps(1) infinite;
-            -webkit-animation: blink 1s steps(1) infinite;
-          }
-
-          @keyframes blink {
-            0% {
-              background-color: black;
-            }
-            50% {
-              background-color: green;
-            }
-            100% {
-              background-color: black;
-            }
-          }
-          @-webkit-keyframes blink {
-            0% {
-              background-color: black;
-            }
-            50% {
-              background-color: green;
-            }
-            100% {
-              background-color: black;
-            }
-          }
-
-        </style>
     </head>
-    <body class="homepage">
-      <div class="center-wrapper">
-        <div class="text">
-          $ whois flashpoint.house
-          <div class="blinker"></div>
-        </div>
+
+    <body>
+      <div id="home" class="terminal">
       </div>
+
+      <script src="js/site.js"></script>
     </body>
 </html>

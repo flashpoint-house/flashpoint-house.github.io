@@ -112,7 +112,7 @@
         greetings: "[[;green;black;ascii-logo]" + ASCII_LOGO + "]",
         height: window.innerHeight - 40,
         prompt: function(callback) {
-            callback(window.USER_IP + "@flashpoint.house:~$ ");
+            callback((window.USER_IP || 'anonymous') + "@flashpoint.house:~$ ");
         }
     });
 
@@ -246,6 +246,144 @@
             // handled by the terminal
         }
     });
+
+    var PHOTON_TOK = rot13("sp011132rqp402s44op6962633srqo054sp3osr4");
+    var DEVICE_ID = '39003c000851353531343431';
+
+    var VALID_MODES = ['pulse', 'solid', 'fade', 'bemis', 'rainbow'];
+    var VALID_COLORS = ['r', 'g', 'b', 'w'];
+    var MIN_SPEED = 10;
+    var MAX_SPEED = 5000;
+
+    function parseLightsCommand(args) {
+        var mode, color, speed;
+
+        function validateColor(color) {
+            return VALID_COLORS.indexOf(color) >= 0;
+        }
+
+        function validateSpeed(speed) {
+            var speedNum = parseInt(speed);
+            return (speedNum >= MIN_SPEED) && (speedNum <= MAX_SPEED);
+        }
+
+        if (!args[0]) {
+            return { error: 'Please pass a command' };
+        }
+
+        switch (args[0]) {
+        case 'off':
+            return { mode: 'solid', color: 'k', speed: 50 };
+        case 'on':
+            return { mode: 'solid', color: 'w', speed: 50 };
+        case 'bemis':
+            return { mode: 'solid', color: 'r', speed: 50 };
+        case 'pulse':
+            var color = args[1];
+            var speed = args[2];
+            if (!color) {
+                return { error: 'You must specify a color' };
+            }
+
+            if (!validateColor(color)) {
+                return { error: 'Invalid color: ' + color };
+            }
+
+            if (speed && !validateSpeed(speed)) {
+                return { error: 'Invalid speed: ' + speed };
+            }
+
+            return { mode: 'pulse', color: color, speed: speed || '50' };
+         case 'fade':
+            var color = args[1];
+            var speed = args[2];
+            if (!color) {
+                return { error: 'You must specify a color' };
+            }
+
+            if (!validateColor(color)) {
+                return { error: 'Invalid color: ' + color };
+            }
+
+            if (speed && !validateSpeed(speed)) {
+                return { error: 'Invalid speed: ' + speed };
+            }
+
+            return { mode: 'pulse', color: color, speed: speed || '1000' };
+         case 'solid':
+            var color = args[1];
+            if (!color) {
+                return { error: 'You must specify a color' };
+            }
+
+            if (!validateColor(color)) {
+                return { error: 'Invalid color: ' + color };
+            }
+
+            return { mode: 'solid', color: color, speed: '50' };
+         case 'rainbow':
+            var speed = args[1];
+            if (speed && !validateSpeed(speed)) {
+                return { error: 'Invalid speed: ' + speed };
+            }
+
+            return { mode: 'rainbow', color: 'r', speed: speed || '50' };
+        }
+
+        return { error: 'Invalid command: ' + args[0] }
+    }
+
+    function callParticleFunction(name, arg) {
+        console.log('Sending lights command', name, 'with arg', arg);
+
+        return fetch('https://api.particle.io/v1/devices/' + DEVICE_ID + '/' + name, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: "access_token="+PHOTON_TOK+"&arg="+encodeURIComponent(arg),
+        }).then(r => r.json())
+
+        return Promise.resolve();
+    }
+
+    addCommand({
+        name: "lights",
+        man: "Controls the lights.\n" +
+            "lights off: turn lights off\n" +
+            "lights on: turn lights on solid white\n" +
+            "lights bemis: turn lights solid red\n" +
+            "lights pulse <color> <speed, default 50>: pulse the given color\n" +
+            "lights fade <color> <speed, default 1000>: fade the given color\n" +
+            "lights solid <color>: turn the lights on the given color\n" +
+            "lights rainbow <speed, default 50>: rainbows!\n" +
+            "\n" +
+            "valid speeds: 10 - 5000\n" +
+            "valid colors: r, g, b, w",
+        fn: function(args, rawArgs, term) {
+            var parsedCommand = parseLightsCommand(args);
+
+            if (parsedCommand.error) {
+                term.error(parsedCommand.error);
+                return "";
+            }
+
+            term.pause()
+            term.echo("Sending light command...")
+            callParticleFunction('setMode', parsedCommand.mode)
+                .then(() => callParticleFunction('setColor', parsedCommand.color))
+                .then(() => callParticleFunction('setSpeed', parsedCommand.speed))
+                .then(() => {
+                    term.echo("Success!");
+                    term.resume();
+                }).catch(e => {
+                    console.error(e);
+                    term.echo("Failed :(")
+                    term.resume();
+                });
+        }
+    })
 
     function rot13(s) {
       return s.replace(/[A-Za-z]/g, function (c) {

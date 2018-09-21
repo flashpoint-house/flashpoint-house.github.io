@@ -273,11 +273,11 @@
 
         switch (args[0]) {
         case 'off':
-            return { mode: 'solid', color: 'k', speed: 50 };
+            return { mode: 'solid', color: 'k', speed: 100 };
         case 'on':
-            return { mode: 'solid', color: 'w', speed: 50 };
+            return { mode: 'solid', color: 'w', speed: 100 };
         case 'bemis':
-            return { mode: 'solid', color: 'r', speed: 50 };
+            return { mode: 'solid', color: 'r', speed: 100 };
         case 'pulse':
             var color = args[1];
             var speed = args[2];
@@ -293,7 +293,7 @@
                 return { error: 'Invalid speed: ' + speed };
             }
 
-            return { mode: 'pulse', color: color, speed: speed || '50' };
+            return { mode: 'pulse', color: color, speed: speed || '100' };
          case 'fade':
             var color = args[1];
             var speed = args[2];
@@ -309,7 +309,7 @@
                 return { error: 'Invalid speed: ' + speed };
             }
 
-            return { mode: 'pulse', color: color, speed: speed || '1000' };
+            return { mode: 'fade', color: color, speed: speed || '100' };
          case 'solid':
             var color = args[1];
             if (!color) {
@@ -320,14 +320,14 @@
                 return { error: 'Invalid color: ' + color };
             }
 
-            return { mode: 'solid', color: color, speed: '50' };
+            return { mode: 'solid', color: color, speed: '100' };
          case 'rainbow':
             var speed = args[1];
             if (speed && !validateSpeed(speed)) {
                 return { error: 'Invalid speed: ' + speed };
             }
 
-            return { mode: 'rainbow', color: 'r', speed: speed || '50' };
+            return { mode: 'rainbow', color: 'r', speed: speed || '100' };
         }
 
         return { error: 'Invalid command: ' + args[0] }
@@ -354,10 +354,10 @@
             "lights off: turn lights off\n" +
             "lights on: turn lights on solid white\n" +
             "lights bemis: turn lights solid red\n" +
-            "lights pulse <color> <speed, default 50>: pulse the given color\n" +
-            "lights fade <color> <speed, default 1000>: fade the given color\n" +
+            "lights pulse <color> <speed, default 100>: pulse the given color\n" +
+            "lights fade <color> <speed, default 100>: fade the given color\n" +
             "lights solid <color>: turn the lights on the given color\n" +
-            "lights rainbow <speed, default 50>: rainbows!\n" +
+            "lights rainbow <speed, default 100>: rainbows!\n" +
             "\n" +
             "valid speeds: 10 - 5000\n" +
             "valid colors: r, g, b, w",
